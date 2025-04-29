@@ -39,13 +39,11 @@ export async function POST(request: NextRequest) {
     console.log('API: Transcribing audio...');
     let userTranscript = '';
     try {
+
+      console.log("Hello: File",audioFile)
       const transcription = await openai.audio.transcriptions.create({
         model: 'whisper-1', // Specify the Whisper model
-        file: { // Pass the audio data as a file-like object
-            // Provide a filename hint, important for the API to recognize the format
-            name: audioFile.name || 'audio.webm',
-            data: audioBuffer, // The audio data buffer
-        },
+        file: audioFile
         // language: 'en', // Optional: Specify language code (e.g., 'en') if known
       });
       userTranscript = transcription.text;
